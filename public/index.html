@@ -1,15 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Kashurpedia - Wikipedia Clone" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kashurpedia</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
+  <div id="app">
+    <h1>Kashurpedia</h1>
+    <input type="text" id="search" placeholder="Search articles..." />
+    <div id="results"></div>
+    <button onclick="showCreateForm()">Create New Article</button>
+    <div id="createForm" style="display:none;">
+      <input type="text" id="title" placeholder="Title" />
+      <textarea id="content" placeholder="Content"></textarea>
+      <button onclick="saveArticle()">Save</button>
+    </div>
+  </div>
+  <script src="/main.js" type="module"></script>
 </body>
 </html>
