@@ -18,9 +18,9 @@ const db = getDatabase(app);
 
 document.getElementById('search').addEventListener('input', searchArticles);
 
-function showCreateForm() {
+window.showCreateForm = function () {
   document.getElementById('createForm').style.display = 'block';
-}
+};
 
 function saveArticle() {
   const title = document.getElementById('title').value.trim();
