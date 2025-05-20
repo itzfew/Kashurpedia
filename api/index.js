@@ -1,32 +1,28 @@
-const express = require('express');
-const fs = require('fs').promises;
-const path = require('path');
-const matter = require('gray-matter');
+import Layout from '../components/Layout';
+import PostCard from '../components/PostCard';
+import { getAllPosts } from '../lib/posts';
 
-const app = express();
-app.use(express.json());
+export default function Home({ posts }) {
+  return (
+    <Layout>
+      <div className="prose max-w-none">
+        <h1>Welcome to Kashurpedia</h1>
+        <p>A community-driven encyclopedia for Kashmiri villages and culture.</p>
+        {posts.length === 0 ? (
+          <p>No posts available. Create a new post to get started!</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
+    </Layout>
+  );
+}
 
-app.post('/', async (req, res) => {
-  try {
-    const { title, content, format = 'md' } = req.body;
-    if (!title || !content) {
-      return res.status(400).json({ error: 'Title and content are required' });
-    }
-
-    const slug = title.toLowerCase().replace(/\s+/g, '-');
-    const filePath = path.join(process.cwd(), 'posts', `${slug}.${format}`);
-    const frontMatter = `---
-title: "${title}"
-date: "${new Date().toISOString()}"
-categories: []
----
-${content}`;
-
-    await fs.writeFile(filePath, frontMatter);
-    res.status(200).json({ message: 'Post created', slug });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to create post', details: error.message });
-  }
-});
-
-module.exports = app;
+export async function getStaticProps() {
+  const posts = await getAllPosts();
+  return { props: { posts } };
+}
