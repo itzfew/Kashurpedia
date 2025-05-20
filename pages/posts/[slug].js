@@ -20,10 +20,16 @@ export default function Post({ post }) {
 export async function getStaticPaths() {
   const posts = await getAllPosts();
   const paths = posts.map((post) => ({ params: { slug: post.slug } }));
-  return { paths, fallback: false };
+  return {
+    paths,
+    fallback: false, // 404 for non-existent slugs
+  };
 }
 
 export async function getStaticProps({ params }) {
   const post = await getPostBySlug(params.slug);
+  if (!post) {
+    return { notFound: true }; // Return 404 for missing posts
+  }
   return { props: { post } };
 }
