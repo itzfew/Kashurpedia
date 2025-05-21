@@ -1,6 +1,5 @@
-import '../public/styles/main.css';
-import 'highlight.js/styles/github.css'; // Syntax highlighting theme
+import "../styles/globals.css";
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
