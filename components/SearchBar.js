@@ -1,29 +1,20 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-
-export default function SearchBar() {
-  const [query, setQuery] = useState('');
-  const router = useRouter();
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query) {
-      router.push(`/search?q=${query}`);
-    }
-  };
-
+export default function SearchBar({ query, setQuery }) {
   return (
-    <form onSubmit={handleSearch} className="flex">
+    <div style={{ margin: '20px 0' }}>
       <input
-        type="text"
+        type="search"
+        placeholder="Search Kashurpedia..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search Kashurpedia..."
-        className="border p-2 rounded-l"
+        style={{
+          width: '100%',
+          maxWidth: '500px',
+          padding: '10px',
+          fontSize: '16px',
+          border: '1px solid #a2a9b1',
+          borderRadius: '2px'
+        }}
       />
-      <button type="submit" className="bg-blue-600 text-white p-2 rounded-r">
-        Search
-      </button>
-    </form>
+    </div>
   );
 }
